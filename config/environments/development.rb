@@ -73,8 +73,8 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-  config.stripe.secret_key = ENV['secret_key']
-  config.stripe.publishable_key = ENV['publishable_key']
+  config.stripe.secret_key = "sk_test_51KJUFuHRma2hFrQQ8rwF3FaVKRl0obDaUSMot6p5TN2b3Sg2k6RcQk6RmI2NhJQLIViwZx7ikN9Iwz5bPFwvGRFD00PAPbuQQJ"
+  config.stripe.publishable_key = "pk_test_51KJUFuHRma2hFrQQ7YS9kJq1s6qdbPmozNa0vgiT1QreulO6jRUwEDJNg6mDA7DHgqQFWUVGjnbv8alAl4uE12Vw00xj4gEUJX"
   config.action_cable.url = "ws://localhost:3000/cable"
   config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
 end

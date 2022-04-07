@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.6.3"
+ruby "2.7.0"
 
 gem "rails", "~> 5.2.3"
 gem "mysql2", ">= 0.4.4", "< 0.6.0"
@@ -34,7 +34,7 @@ gem "ckeditor", "4.1.3"
 gem "roo"
 gem "magnific-popup-rails"
 gem "whenever", require: false
-gem "rqrcode_png"
+gem 'rqrcode_png', git: "https://github.com/DCarper/rqrcode_png.git"
 gem "google-qr"
 gem "dragonfly"
 gem "mini_magick"

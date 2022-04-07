@@ -26,7 +26,7 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.all.order(created_at: :desc).page(params[:page]).per Settings.per_page_orders
+    @orders = Order.where(user_id: current_user.id).order(created_at: :desc).page(params[:page]).per Settings.per_page_orders
   end
 
   private

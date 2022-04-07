@@ -36,7 +36,7 @@ class BillingsController < ApplicationController
     @payment = Stripe::Charge.create customer: customer.id,
                                      amount: order.total / 10,
                                      description: "Payments",
-                                     currency: "usd"
+                                     currency: "vnd"
     @payment.save
     order.order_status = true
     order.chart = order.generate_qr

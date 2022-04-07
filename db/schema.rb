@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_07_31_022420) do
 
-  create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "name"
@@ -24,19 +24,28 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.index ["email"], name: "index_admins_on_email", unique: true
   end
 
-  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "content"
+    t.boolean "correct_answer"
+    t.bigint "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
+  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "cities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "cities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "movie_id"
     t.integer "parent_id"
@@ -47,7 +56,16 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "movie_theaters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "exams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.integer "duration"
+    t.bigint "subject_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subject_id"], name: "index_exams_on_subject_id"
+  end
+
+  create_table "movie_theaters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "theater_id"
     t.bigint "movie_id"
     t.datetime "time"
@@ -58,7 +76,7 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.index ["theater_id"], name: "index_movie_theaters_on_theater_id"
   end
 
-  create_table "movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.boolean "available"
     t.bigint "category_id"
@@ -78,14 +96,14 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.index ["category_id"], name: "index_movies_on_category_id"
   end
 
-  create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "event"
     t.boolean "read", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "order_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "order_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "movie_theater_id"
     t.bigint "order_id"
     t.bigint "seat_id"
@@ -96,7 +114,7 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.index ["seat_id"], name: "index_order_items_on_seat_id"
   end
 
-  create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.decimal "total", precision: 8, scale: 2
     t.datetime "created_at", null: false
@@ -108,7 +126,37 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "reviews", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "content"
+    t.bigint "exam_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_questions_on_exam_id"
+  end
+
+  create_table "responds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_responds_on_user_id"
+  end
+
+  create_table "results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "exam_id"
+    t.bigint "question_id"
+    t.bigint "answer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "respond_id"
+    t.index ["answer_id"], name: "index_results_on_answer_id"
+    t.index ["exam_id"], name: "index_results_on_exam_id"
+    t.index ["question_id"], name: "index_results_on_question_id"
+    t.index ["respond_id"], name: "index_results_on_respond_id"
+    t.index ["user_id"], name: "index_results_on_user_id"
+  end
+
+  create_table "reviews", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "content"
     t.integer "rate"
     t.integer "movie_id"
@@ -117,7 +165,7 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "theater_id"
     t.datetime "created_at", null: false
@@ -125,7 +173,7 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.index ["theater_id"], name: "index_rooms_on_theater_id"
   end
 
-  create_table "seats", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "seats", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "room_id"
     t.boolean "available"
@@ -134,7 +182,7 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.index ["room_id"], name: "index_seats_on_room_id"
   end
 
-  create_table "showtime_seats", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "showtime_seats", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "movie_theater_id"
     t.bigint "seat_id"
     t.boolean "seat_available"
@@ -144,7 +192,13 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.index ["seat_id"], name: "index_showtime_seats_on_seat_id"
   end
 
-  create_table "theaters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "subjects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "theaters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "city_id"
     t.datetime "created_at", null: false
@@ -152,11 +206,18 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.index ["city_id"], name: "index_theaters_on_city_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
+    t.string "email"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email", default: "", null: false
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.bigint "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.boolean "admin", default: false
+    t.string "remember_digest"
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -170,8 +231,10 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "answers", "questions"
   add_foreign_key "comments", "movies"
   add_foreign_key "comments", "users"
+  add_foreign_key "exams", "subjects"
   add_foreign_key "movie_theaters", "movies"
   add_foreign_key "movie_theaters", "theaters"
   add_foreign_key "movies", "categories"
@@ -179,6 +242,13 @@ ActiveRecord::Schema.define(version: 2019_07_31_022420) do
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "seats"
   add_foreign_key "orders", "users"
+  add_foreign_key "questions", "exams"
+  add_foreign_key "responds", "users"
+  add_foreign_key "results", "answers"
+  add_foreign_key "results", "exams"
+  add_foreign_key "results", "questions"
+  add_foreign_key "results", "responds"
+  add_foreign_key "results", "users"
   add_foreign_key "rooms", "theaters"
   add_foreign_key "showtime_seats", "movie_theaters"
   add_foreign_key "showtime_seats", "seats"

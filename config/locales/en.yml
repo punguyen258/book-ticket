@@ -1,7 +1,7 @@
 en:
   layouts:
     header:
-      web_name: "RubyDevCinema"
+      web_name: "WILLWILL Cinema"
       menu: "Menu"
       profile: "Profile"
       option: "Option"
@@ -72,7 +72,7 @@ en:
       descrip: "Description: "
       trailer: "Trailer"
       book: "Book Tickets"
-      bok: "Book"
+      book_2: "Book"
     index:
       details: Details
   
@@ -94,12 +94,12 @@ en:
       city: "Area"
     show:
       nil: "There are no theaters in this city yet"
-      cinema: "Rubydev cinema"
+      cinema: "WILLWILL cinema"
   reviews:
     form:
       login: "Login"
       add: "Add"
-      rate: "You rate"
+      rate: "Your rate"
       content: "Your review content"
     review:
       delete: "Delete"
